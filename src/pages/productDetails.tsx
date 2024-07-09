@@ -6,7 +6,7 @@ import Navbar from "../components/navbar.tsx";
 import { products } from "../components/products.ts";
 import delivery from "../../src/assets/icons/delivery-truck-svgrepo-com (1) 1.svg";
 import shop from "../../src/assets/icons/shop-2-svgrepo-com 2.svg";
-import Back from "../../src/assets/icons/back.svg";
+// import Back from "../../src/assets/icons/back.svg";
 import Footer from "../components/footer.tsx";
 import favorite from "../../src/assets/icons/Favorites.svg";
 interface specification {
@@ -20,8 +20,7 @@ const ProductDetails = () => {
     gottenProducts,
     setGottenProducts,
     setCartProducts,
-  }: // cartProducts,
-  stateContextType = useStateContext();
+  }: stateContextType = useStateContext();
   useEffect(() => {
     if (setGottenProducts !== undefined) setGottenProducts(products);
   }, [gottenProducts, setGottenProducts]);
