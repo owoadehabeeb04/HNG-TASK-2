@@ -71,14 +71,14 @@ const Address = () => {
       <p className="cursor-pointer mt-12 font-Inter text-[14px] font-normal leading-[16px]  underline">
         Add New Address
       </p>
-      <div className="flex mt-5 gap-6 items-end justify-end">
-        <Link to="/cart">
-          <button className="border py-4 px-14 rounded-[6px] border-[#000] bg-[#fff] w-fit text-[#000] text-base font-normal flex justify-center items-center ">
+      <div className="flex mt-5 w-full gap-6 sm:items-end sm:justify-end">
+        <Link to="/cart" className="sm:w-fit w-full">
+          <button className="border py-4 sm:px-14 rounded-[6px] border-[#000] bg-[#fff] w-full sm:w-fit text-[#000] text-base font-normal flex justify-center items-center ">
             Back
           </button>
         </Link>
         <button
-          className="border py-4 px-14 rounded-[6px] border-[#000] bg-[#000] w-fit text-[#fff] text-base font-normal flex justify-center items-center "
+          className="border py-4 sm:px-14 rounded-[6px] border-[#000] bg-[#000] w-full sm:w-fit text-[#fff] text-base font-normal flex justify-center items-center "
           onClick={() => setAddressOrPayment(1)}
         >
           Next

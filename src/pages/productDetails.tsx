@@ -128,11 +128,11 @@ const ProductDetails = () => {
           />
         </div>
         <div className="px-[1.8125rem] flex flex-col gap-6 mt-8 sm:mt-16">
-          <h1 className="text-[34px] sm:text-[40px] font-Inter font-bold leading-[40px]">
+          <h1 className="text-[32px] sm:text-[40px] font-Inter fot-semibold sm:font-bold leading-[40px]">
             {ProductDetails && ProductDetails[0]?.productName}
           </h1>
 
-          <p className="text-[#000] font-medium font-Inter text-[32px]  flex flex-col sm:flex-row  leading-[48px]">
+          <p className="text-[#000] font-medium font-Inter text-[24px] sm:text-[32px]  flex flex-col sm:flex-row  leading-[48px]">
             {ProductDetails && ProductDetails[0]?.productPrice}{" "}
             <span className="text-[24px] text-[#A0A0A0]  font-Inter font-normal line-through ">
               {ProductDetails && ProductDetails[0]?.slashedProductPrice}{" "}
