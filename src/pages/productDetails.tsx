@@ -86,11 +86,11 @@ const ProductDetails = () => {
       <Navbar />
       <div className="pt-8 bg-[#FAFAFA]">
         <div className="w-[1250px] mx-auto  px-[1.5rem] max-w-full">
-          <div className="py-4 border-b mb-4  border-[#B5B5B5]">
+          {/* <div className="py-4 border-b mb-4  border-[#B5B5B5]">
             <Link to="/shop/">
               <img src={Back} alt="back" />
             </Link>
-          </div>
+          </div> */}
           <div className="sm:flex hidden">
             <div className="hidden sm:flex items-center gap-6 px-4">
               <Link to="/shop/" className="flex items-center gap-6">
