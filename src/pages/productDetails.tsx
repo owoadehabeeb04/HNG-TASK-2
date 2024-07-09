@@ -20,8 +20,8 @@ const ProductDetails = () => {
     gottenProducts,
     setGottenProducts,
     setCartProducts,
-    cartProducts,
-  }: stateContextType = useStateContext();
+  }: // cartProducts,
+  stateContextType = useStateContext();
   useEffect(() => {
     if (setGottenProducts !== undefined) setGottenProducts(products);
   }, [gottenProducts, setGottenProducts]);
