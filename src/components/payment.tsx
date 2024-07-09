@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 const Payment = () => {
   const {
     cartProducts,
-    // clickAddress,
-    // address,
+    clickAddress,
+    address,
     totalPrice,
     setTotalPrice,
     setAddressOrPayment,
@@ -32,6 +32,13 @@ const Payment = () => {
     localStorage.setItem("cartProducts", JSON.stringify([]));
     navigate("/paymentConfirmation");
   };
+  const [displayAddress, setDisplayAddress] = useState("");
+
+  useEffect(() => {
+    if (address && clickAddress !== undefined) {
+      setDisplayAddress(address[clickAddress]?.subName || "");
+    }
+  }, [address, clickAddress]);
 
   return (
     <div className=" w-[1250px] max-w-full xl:px-0 px-4 sm:px-12 py-12 xl:mx-auto  mx-auto  gap-9 sm:gap-12 lg:gap-24  grid lg:grid-cols-2 ">
@@ -102,7 +109,7 @@ const Payment = () => {
             <h2 className="font-Inter text-[14px] leading-[16[x]] text-[#545454]">
               Address
             </h2>
-            {/* {address && <p>{address && address[clickAddress]}</p>} */}
+            <p>{displayAddress}</p>
           </div>
           <div>
             <h2 className="font-Inter text-[14px] leading-[16[x]] text-[#545454]">
