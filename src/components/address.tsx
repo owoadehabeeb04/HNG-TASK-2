@@ -75,7 +75,7 @@ const Address = () => {
         Add New Address
       </p>
       <div className="flex mt-5 gap-6 items-end justify-end">
-        <Link to="/cart/">
+        <Link to="/cart">
           <button className="border py-4 px-14 rounded-[6px] border-[#000] bg-[#fff] w-fit text-[#000] text-base font-normal flex justify-center items-center ">
             Back
           </button>

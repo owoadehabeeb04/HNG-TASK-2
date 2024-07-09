@@ -33,7 +33,7 @@ const Payment = () => {
       setCartProducts([]);
     }
     localStorage.setItem("cartProducts", JSON.stringify([]));
-    navigate("/paymentConfirmation/");
+    navigate("/paymentConfirmation");
   };
 
   return (

@@ -1,7 +1,7 @@
 import confirm from "../../src/assets/icons/Frame 427319314.svg";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
-// import Footer from "../components/footer";
+import Footer from "../components/footer";
 const PaymentConfirmation = () => {
   return (
     <div>
@@ -36,7 +36,7 @@ const PaymentConfirmation = () => {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import Navbar from "../components/navbar";
-// import Footer from "../components/footer";
+import Footer from "../components/footer";
 import Address from "../components/address";
 import { stateContextType } from "../dataTypes.tsx";
 import { useStateContext } from "../context/stateContext";
@@ -46,7 +46,7 @@ const Checkout = () => {
           <Payment />
         </div>
       )}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

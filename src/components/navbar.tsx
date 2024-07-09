@@ -115,7 +115,7 @@ const Navbar = () => {
             </div>
             <div className="lg:hidden  flex items-center gap-2 sm:gap-4">
               <img src={favorites} alt="favorites" />
-              <Link to="/cart/">
+              <Link to="/cart">
                 <div className="relative">
                   <img src={cart} alt="favorites" />{" "}
                   <span className="bg-[#ff6347] shadow-lg shadow-black rounded-[100%] text-[white] mr-1 px-1 py-0 text-[0.5rem] absolute left-6 top-[0px]">

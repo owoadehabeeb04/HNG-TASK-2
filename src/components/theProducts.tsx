@@ -124,7 +124,7 @@ const TheProducts = () => {
               <h1 className="text-[#000] sm:block hidden   flex-grow text-base leading-[24px] text-center font-Inter">
                 {product?.productName}
               </h1>
-              <h1 className="text-[#000] flex-grow text-base leading-[24px] text-center font-Inter text-ellipsis overflow-hidden whitespace">
+              <h1 className="text-[#000] sm:hidden block flex-grow text-base leading-[24px] text-center font-Inter text-ellipsis overflow-hidden whitespace">
                 {truncateText(product?.productName || "", 28)}
               </h1>
 

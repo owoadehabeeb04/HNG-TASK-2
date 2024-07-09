@@ -6,7 +6,8 @@ import Navbar from "../components/navbar.tsx";
 import { products } from "../components/products.ts";
 import delivery from "../../src/assets/icons/delivery-truck-svgrepo-com (1) 1.svg";
 import shop from "../../src/assets/icons/shop-2-svgrepo-com 2.svg";
-// import Footer from "../components/footer.tsx";
+import Back from "../../src/assets/icons/back.svg";
+import Footer from "../components/footer.tsx";
 import favorite from "../../src/assets/icons/Favorites.svg";
 interface specification {
   brand: string;
@@ -89,6 +90,11 @@ const ProductDetails = () => {
       <Navbar />
       <div className="pt-8 bg-[#FAFAFA]">
         <div className="w-[1250px] mx-auto  px-[1.5rem] max-w-full">
+          <div className="py-4 border-b mb-4  border-[#B5B5B5]">
+            <Link to="/shop/">
+              <img src={Back} alt="back" />
+            </Link>
+          </div>
           <div className="sm:flex hidden">
             <div className="hidden sm:flex items-center gap-6 px-4">
               <Link to="/shop/" className="flex items-center gap-6">
@@ -254,7 +260,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
