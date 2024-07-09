@@ -39,7 +39,7 @@ const Address = () => {
                     onClick={() => setClickAddress(i)}
                   >
                     {i === clickAddress && (
-                      <div className="p-[0.5rem] border-[#000] bg-[#000] border rounded-full  transition-all"></div>
+                      <div className="p-[0.3rem] border-[#000] bg-[#000] border rounded-full  transition-all"></div>
                     )}
                   </div>
                   <div>

@@ -1,5 +1,5 @@
 import Navbar from "../components/navbar";
-import Footer from "../components/footer";
+// import Footer from "../components/footer";
 import Address from "../components/address";
 import { stateContextType } from "../dataTypes.tsx";
 import { useStateContext } from "../context/stateContext";
@@ -23,7 +23,7 @@ const Checkout = () => {
               } border-2 cursor-pointer rounded-full transition-all w-fit`}
             >
               {i === addressOrPayment && (
-                <div className="p-[0.5rem] border-[#000] bg-[#000] border rounded-full  transition-all"></div>
+                <div className="p-[0.3rem] border-[#000] bg-[#000] border rounded-full  transition-all"></div>
               )}
             </div>
             <p
@@ -43,10 +43,10 @@ const Checkout = () => {
         </div>
       ) : (
         <div>
-            <Payment />
+          <Payment />
         </div>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

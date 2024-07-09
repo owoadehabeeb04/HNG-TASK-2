@@ -128,7 +128,7 @@ const TheProducts = () => {
                 {truncateText(product?.productName || "", 28)}
               </h1>
 
-              <p className="font-Inter flex-grow text-[1.5rem] font-semibold leading-6 text-center ">
+              <p className="font-Inter flex-grow text-[20px] font-semibold leading-6 text-center ">
                 {product?.productPrice}
               </p>
               <button

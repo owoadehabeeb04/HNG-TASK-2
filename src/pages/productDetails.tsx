@@ -6,7 +6,7 @@ import Navbar from "../components/navbar.tsx";
 import { products } from "../components/products.ts";
 import delivery from "../../src/assets/icons/delivery-truck-svgrepo-com (1) 1.svg";
 import shop from "../../src/assets/icons/shop-2-svgrepo-com 2.svg";
-import Footer from "../components/footer.tsx";
+// import Footer from "../components/footer.tsx";
 import favorite from "../../src/assets/icons/Favorites.svg";
 interface specification {
   brand: string;
@@ -91,24 +91,30 @@ const ProductDetails = () => {
         <div className="w-[1250px] mx-auto  px-[1.5rem] max-w-full">
           <div className="sm:flex hidden">
             <div className="hidden sm:flex items-center gap-6 px-4">
-              <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                Home
-              </p>
-              <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                {">"}
-              </span>
-              <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                Categories
-              </p>
-              <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                {">"}
-              </span>
-              <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                {ProductDetails && ProductDetails[0]?.ProductCategory}
-              </p>
-              <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                {">"}
-              </span>
+              <Link to="/shop/" className="flex items-center gap-6">
+                <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                  Home
+                </p>
+                <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                  {">"}
+                </span>
+              </Link>
+              <Link to="/shop/" className="flex items-center gap-6">
+                <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                  Categories
+                </p>
+                <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                  {">"}
+                </span>
+              </Link>
+              <Link to="/shop/" className="flex items-center gap-6">
+                <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                  {ProductDetails && ProductDetails[0]?.ProductCategory}
+                </p>
+                <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                  {">"}
+                </span>
+              </Link>
               <p className="font-Inter text-base leading-[16px]  font-normal text-[#000]  ">
                 {ProductDetails && ProductDetails[0]?.productName}
               </p>
@@ -248,7 +254,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

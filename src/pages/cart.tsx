@@ -5,7 +5,7 @@ import { useStateContext } from "../context/stateContext.tsx";
 import empty from "../../src/assets/icons/emptycart.svg";
 import MyCart from "../components/mycart.tsx";
 import { Link } from "react-router-dom";
-import Footer from "../components/footer.tsx";
+// import Footer from "../components/footer.tsx";
 const Cart = () => {
   const { setCartProducts, cartProducts }: stateContextType = useStateContext();
 
@@ -39,7 +39,7 @@ const Cart = () => {
             </Link>
           </div>
         )}
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
   );

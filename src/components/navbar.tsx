@@ -11,8 +11,8 @@ import close from "../../src/assets/icons/Close.svg";
 const Navbar = () => {
   const routes: RouteConfig[] = [
     { path: "/", text: "Home" },
-    { path: "/about", text: "About" },
-    { path: "/contact", text: "Contact" },
+    { path: "#", text: "About" },
+    { path: "#", text: "Contact" },
   ];
 
   const [clicked, setClicked] = useState<number>();
@@ -32,7 +32,7 @@ const Navbar = () => {
     <div className="lg:px-[2rem] md:px-6 px-4 xl:px-[4.5rem] md:py-2 lg:py-[1rem] border-b border-[##B5B5B5]">
       <nav className="flex flex-row items-center justify-between gap-2 xl:gap-6">
         <div>
-          <h1 className="font-Inter text-[18px] lg:text-[18px] xl:text-[33px] font-normal leading-[48px]">
+          <h1 className="font-Inter text-[18px] lg:text-[18px] xl:text-[33px] font-normal leading-[28px] xl:leading-[48px]">
             IFYTHEL LIGHTS
           </h1>
         </div>

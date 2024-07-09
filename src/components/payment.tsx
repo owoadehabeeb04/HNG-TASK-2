@@ -154,11 +154,11 @@ const Payment = () => {
                 i === cardOrBank
                   ? "border-[#000] p-[0.2rem]"
                   : "border-[#B2B2B2] p-[0.5rem] "
-              } border-2 cursor-pointer self-start items-start flex justify-start rounded-full transition-all w-fit`}
+              } border-2 cursor-pointer rounded-full transition-all w-fit`}
               onClick={() => setCardOrBank(i)}
             >
               {i === cardOrBank && (
-                <div className="p-[0.5rem]  border-[#000] bg-[#000] border rounded-full  transition-all"></div>
+                <div className="p-[0.3rem] border-[#000] bg-[#000] border rounded-full  transition-all"></div>
               )}
             </div>
             <p>{type}</p>
