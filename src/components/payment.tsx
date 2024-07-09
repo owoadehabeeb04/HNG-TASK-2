@@ -7,17 +7,14 @@ import { useNavigate } from "react-router-dom";
 const Payment = () => {
   const {
     cartProducts,
-    clickAddress,
-    address,
+    // clickAddress,
+    // address,
     totalPrice,
     setTotalPrice,
     setAddressOrPayment,
     setCartProducts,
   }: stateContextType = useStateContext();
-  console.log({ cartProducts });
-  console.log(address, clickAddress);
   const deliveryFee: number = 5000;
-  console.log({ totalPrice });
 
   useEffect(() => {
     const totalPriceFromStorage = localStorage.getItem("totalPrice");

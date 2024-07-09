@@ -23,7 +23,6 @@ const MyCart = () => {
       console.error("Cart products is not available.");
       return;
     }
-    console.log("re rendered");
     const updatedCartProducts: cartProps[] = [...cartProducts];
     if (index >= 0 && index < updatedCartProducts.length) {
       const updatedQuantity = updatedCartProducts[index].quantity + 1;
@@ -35,13 +34,6 @@ const MyCart = () => {
 
       updatedCartProducts[index] = updatedProduct;
 
-      console.log(
-        "Updated Cart Product quantity:",
-        updatedCartProducts[index].quantity,
-        "Updated Cart Product price:",
-        updatedCartProducts[index].productPrice
-      );
-
       setCartProducts(updatedCartProducts);
 
       localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
@@ -52,7 +44,6 @@ const MyCart = () => {
     }
   };
 
-  console.log(cartProducts && cartProducts[1]);
   const decreaseQuantity = (index: number) => {
     if (!cartProducts || !setCartProducts) {
       console.error(
@@ -60,7 +51,6 @@ const MyCart = () => {
       );
       return;
     }
-    console.log("re rendered");
     const updatedCartProducts: cartProps[] = [...cartProducts];
     if (
       index >= 0 &&
@@ -75,13 +65,6 @@ const MyCart = () => {
       };
 
       updatedCartProducts[index] = updatedProduct;
-
-      console.log(
-        "Updated Cart Product quantity:",
-        updatedCartProducts[index].quantity,
-        "Updated Cart Product price:",
-        updatedCartProducts[index].productPrice
-      );
 
       setCartProducts(updatedCartProducts);
 
@@ -125,7 +108,6 @@ const MyCart = () => {
     }
   }, [theTotal, setTotalPrice]);
   const deliveryFee: number = 5000;
-  console.log(totalPrice, deliveryFee);
   useEffect(() => {
     if (!isNaN(theTotal) && theTotal) {
       const formattedTotal = theTotal.toFixed(2);

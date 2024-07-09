@@ -6,14 +6,11 @@ import { Link } from "react-router-dom";
 const Address = () => {
   const {
     setAddressOrPayment,
-    setAddress,
     address,
     setClickAddress,
     clickAddress,
   }: stateContextType = useStateContext();
 
-  console.log(setAddress);
-  console.log({ address });
   return (
     <div className="w-[1250px] max-w-full xl:px-0 px-4 sm:px-12 py-8 sm:py-12 xl:mx-auto ">
       <h1 className="text-[#000] font-semibold text-[20px] leading-[24px] ">

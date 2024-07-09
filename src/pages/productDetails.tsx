@@ -24,13 +24,11 @@ const ProductDetails = () => {
   }: stateContextType = useStateContext();
   useEffect(() => {
     if (setGottenProducts !== undefined) setGottenProducts(products);
-    console.log({ gottenProducts });
   }, [gottenProducts, setGottenProducts]);
   const ProductDetails = gottenProducts?.filter(
     (product: productsProps) => product?.id === id
   );
-  console.log({ ProductDetails });
-  console.log("gotten");
+
   const specification: specification[] = [
     {
       brand: "brand",
@@ -62,11 +60,10 @@ const ProductDetails = () => {
       ProductDetails &&
       ProductDetails[0]?.ProductCategory &&
       product?.ProductCategory === ProductDetails[0].ProductCategory &&
-      product?.id !== ProductDetails[0].id // Replace 'id' with the unique identifier you use
+      product?.id !== ProductDetails[0].id
   );
 
   const clickCart = (i: number) => {
-    console.log("clicked");
     if (setCartProducts !== undefined && gottenProducts) {
       const productToAdd = { ...gottenProducts[i], quantity: 1 };
       setCartProducts((prevCartProducts) => {
@@ -77,7 +74,6 @@ const ProductDetails = () => {
         );
         return updatedCartProducts;
       });
-      console.log({ cartProducts });
       alert("added successfully");
     }
   };

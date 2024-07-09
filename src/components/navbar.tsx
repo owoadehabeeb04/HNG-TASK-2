@@ -27,7 +27,6 @@ const Navbar = () => {
   const click = () => {
     setToggle(!toggle);
   };
-  console.log({ cartProducts });
   return (
     <div className="lg:px-[2rem] md:px-6 px-4 xl:px-[4.5rem] md:py-2 lg:py-[1rem] border-b border-[##B5B5B5]">
       <nav className="flex flex-row items-center justify-between gap-2 xl:gap-6">

@@ -8,8 +8,6 @@ import { useStateContext } from "../context/stateContext";
 import { Link } from "react-router-dom";
 import filter from "../../src/assets/icons/FILTER.svg";
 const TheProducts = () => {
-  console.log(products);
-
   const {
     cartProducts,
     setCartProducts,
@@ -18,14 +16,12 @@ const TheProducts = () => {
   }: stateContextType = useStateContext();
   useEffect(() => {
     if (setGottenProducts !== undefined) setGottenProducts(products);
-    console.log({ gottenProducts });
   }, [gottenProducts, setGottenProducts]);
   useEffect(() => {
     const storedCartProducts = localStorage.getItem("cartProducts");
     if (setCartProducts && storedCartProducts) {
       setCartProducts(JSON.parse(storedCartProducts));
     }
-    console.log({ cartProducts });
   }, [setCartProducts]);
 
   useEffect(() => {
@@ -33,7 +29,6 @@ const TheProducts = () => {
   }, [cartProducts]);
 
   const clickCart = (i: number) => {
-    console.log("clicked");
     if (setCartProducts !== undefined && gottenProducts) {
       const productToAdd = { ...gottenProducts[i], quantity: 1 };
       setCartProducts((prevCartProducts) => {
@@ -44,7 +39,6 @@ const TheProducts = () => {
         );
         return updatedCartProducts;
       });
-      console.log({ cartProducts });
       alert("added successfully");
     }
   };
