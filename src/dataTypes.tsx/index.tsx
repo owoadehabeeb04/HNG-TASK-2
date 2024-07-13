@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type productsProps = {
   productName: string;
+  name: string;
   productImage: string;
   productPrice: string | number;
+  current_price: any;
   slashedProductPrice: string | number;
   ProductCategory: string;
   productDetails1: string;
   productDetails2: string;
   productDetails3: string;
   id: string;
+  unique_id: string;
+  photos: any;
 };
 export type cartProps = {
   productName: string;

@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { productsProps, stateContextType } from "../dataTypes.tsx";
+import { stateContextType } from "../dataTypes.tsx";
 import { useStateContext } from "../context/stateContext";
 import Navbar from "../components/navbar.tsx";
-import { products } from "../components/products.ts";
+// import { products } from "../components/products.ts";
 import delivery from "../../src/assets/icons/delivery-truck-svgrepo-com (1) 1.svg";
 import shop from "../../src/assets/icons/shop-2-svgrepo-com 2.svg";
 // import Back from "../../src/assets/icons/back.svg";
 import Footer from "../components/footer.tsx";
-import favorite from "../../src/assets/icons/Favorites.svg";
+// import favorite from "../../src/assets/icons/Favorites.svg";
+import axios from "axios";
 interface specification {
   brand: string;
   text: string;
@@ -22,12 +24,13 @@ const ProductDetails = () => {
     setCartProducts,
   }: stateContextType = useStateContext();
   useEffect(() => {
-    if (setGottenProducts !== undefined) setGottenProducts(products);
+    // if (setGottenProducts !== undefined) setGottenProducts(products);
   }, [gottenProducts, setGottenProducts]);
-  const ProductDetails = gottenProducts?.filter(
-    (product: productsProps) => product?.id === id
-  );
+  // const ProductDetails = gottenProducts?.filter(
+  //   (product: productsProps) => product?.id === id
+  // );
 
+  const [ProductDetails, setProductDetails] = useState<any>({});
   const specification: specification[] = [
     {
       brand: "brand",
@@ -54,13 +57,35 @@ const ProductDetails = () => {
       text: "56*120",
     },
   ];
-  const relatedProducts = gottenProducts?.filter(
-    (product: productsProps) =>
-      ProductDetails &&
-      ProductDetails[0]?.ProductCategory &&
-      product?.ProductCategory === ProductDetails[0].ProductCategory &&
-      product?.id !== ProductDetails[0].id
-  );
+  useEffect(() => {
+    const fetchProducts = async () => {
+      console.log("working");
+      try {
+        const response = await axios.get(`/api/products/${id}`, {
+          params: {
+            organization_id: "8d8859bc53b749139eaf62129b17e56f",
+            Appid: "EM7DS527TZM9PC4",
+            Apikey: "cb27820f38cd4caa9fe75d9609b3c61720240712155207614682",
+          },
+        });
+        console.log({ response });
+        setProductDetails(response?.data);
+        console.log("working");
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    console.log("working");
+
+    fetchProducts();
+  }, [id]);
+  // const relatedProducts = gottenProducts?.filter(
+  //   (product: productsProps) =>
+  //     ProductDetails &&
+  //     ProductDetails[0]?.ProductCategory &&
+  //     product?.ProductCategory === ProductDetails[0].ProductCategory &&
+  //     product?.id !== ProductDetails[0].id
+  // );
 
   const clickCart = (i: number) => {
     if (setCartProducts !== undefined && gottenProducts) {
@@ -76,10 +101,10 @@ const ProductDetails = () => {
       alert("added successfully");
     }
   };
-  const truncateText = (text: string, maxLength: number) => {
-    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
-  };
-
+  // const truncateText = (text: string, maxLength: number) => {
+  //   return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+  // };
+  console.log("", ProductDetails);
   return (
     <div>
       <Navbar />
@@ -117,26 +142,32 @@ const ProductDetails = () => {
                 </span>
               </Link>
               <p className="font-Inter text-base leading-[16px]  font-normal text-[#000]  ">
-                {ProductDetails && ProductDetails[0]?.productName}
+                {ProductDetails && ProductDetails?.name}
               </p>
             </div>
           </div>
-          <img
-            className="w-full sm:mt-12 object-contain"
-            src={ProductDetails && ProductDetails[0]?.productImage}
-            alt={ProductDetails && ProductDetails[0]?.productName}
-          />
+          {/* {`https://api.timbu.cloud/images/${ProductDetails?.photos[0]?.url}` && (
+            // <Link to={`/productDescription/${ProductDetails?.id}`}>
+            <div className="flex flex-wrap">
+              <img
+                src={`https://api.timbu.cloud/images/${ProductDetails?.photos[0]?.url}`}
+                alt={ProductDetails?.name}
+                className="w-[160px] h-[160px] object-contain"
+              />
+            </div>
+            // </Link>
+          )} */}
         </div>
         <div className="px-[1.8125rem] flex flex-col gap-6 mt-8 sm:mt-16">
           <h1 className="text-[32px] sm:text-[40px] font-Inter fot-semibold sm:font-bold leading-[40px]">
-            {ProductDetails && ProductDetails[0]?.productName}
+            {ProductDetails && ProductDetails?.name}
           </h1>
 
           <p className="text-[#000] font-medium font-Inter text-[24px] sm:text-[32px]  flex flex-col sm:flex-row  leading-[48px]">
-            {ProductDetails && ProductDetails[0]?.productPrice}{" "}
-            <span className="text-[24px] text-[#A0A0A0]  font-Inter font-normal line-through ">
+            ₦ {ProductDetails && ProductDetails?.current_price}{" "}
+            {/* <span className="text-[24px] text-[#A0A0A0]  font-Inter font-normal line-through ">
               {ProductDetails && ProductDetails[0]?.slashedProductPrice}{" "}
-            </span>
+            </span> */}
           </p>
           <div className="flex sm:flex-row flex-col gap-6 items-center">
             <button className="border py-4 px-14 rounded-[6px] border-[#000] bg-[#fff] w-full sm:w-fit text-[#000] text-base font-normal flex justify-center items-center ">
@@ -182,11 +213,7 @@ const ProductDetails = () => {
               </h1>{" "}
               <p className="text-[#9D9D9D] text-[14px] my-8">
                 {" "}
-                {ProductDetails &&
-                  ProductDetails[0]?.productDetails1} <br /> <br />
-                {ProductDetails &&
-                  ProductDetails[0]?.productDetails2} <br /> <br />
-                {ProductDetails && ProductDetails[0]?.productDetails3}{" "}
+                {ProductDetails && ProductDetails?.description} <br /> <br />
               </p>
               <h1 className="text-[20px] leading-[24px] font-normal font-Inter">
                 Specification
@@ -213,7 +240,7 @@ const ProductDetails = () => {
               Related Products
             </h1>
             <div className="grid grid-cols-2  gap-4">
-              {relatedProducts?.map((product, i) => (
+              {/* {relatedProducts?.map((product, i) => (
                 <>
                   {" "}
                   <div
@@ -227,12 +254,7 @@ const ProductDetails = () => {
                       <div className="flex-grow">
                         <img
                           src={product?.productImage}
-                          alt={product?.productName}
-                        />
-                      </div>
-                    </Link>
-                    <h1 className="text-[#000] sm:block hidden   flex-grow text-base leading-[24px] text-center font-Inter">
-                      {product?.productName}
+                          alt={product?.productName} 
                     </h1>
                     <h1 className="text-[#000] sm:hidden block flex-grow text-base leading-[24px] text-center font-Inter text-ellipsis overflow-hidden whitespace">
                       {truncateText(product?.productName || "", 28)}
@@ -249,7 +271,7 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
