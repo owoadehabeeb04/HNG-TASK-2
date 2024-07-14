@@ -16,8 +16,11 @@ export type productsProps = {
 };
 export type cartProps = {
   productName: string;
+  name: string;
+
   productImage: string;
   productPrice: any;
+  current_price: any;
   slashedProductPrice: any;
   ProductCategory: string;
   productDetails1: string;
@@ -25,6 +28,10 @@ export type cartProps = {
   productDetails3: string;
   id: string;
   quantity: number;
+  available_quantity: number;
+  // id: string;
+  unique_id: string;
+  photos: any;
 };
 
 export type RouteConfig = {

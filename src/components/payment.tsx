@@ -10,18 +10,17 @@ const Payment = () => {
     clickAddress,
     address,
     totalPrice,
-    setTotalPrice,
     setAddressOrPayment,
     setCartProducts,
   }: stateContextType = useStateContext();
   const deliveryFee: number = 5000;
 
-  useEffect(() => {
-    const totalPriceFromStorage = localStorage.getItem("totalPrice");
-    if (totalPriceFromStorage) {
-      setTotalPrice(parseFloat(totalPriceFromStorage));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const totalPriceFromStorage = localStorage.getItem("totalPrice");
+  //   if (totalPriceFromStorage) {
+  //     setTotalPrice(parseFloat(totalPriceFromStorage));
+  //   }
+  // }, []);
   const navigate = useNavigate();
   const [cardOrBank, setCardOrBank] = useState(0);
   const typesOfPayment = ["Card Payment", "Bank Transfer"];
@@ -29,7 +28,7 @@ const Payment = () => {
     if (setCartProducts) {
       setCartProducts([]);
     }
-    localStorage.setItem("cartProducts", JSON.stringify([]));
+    // localStorage.setItem("cartProducts", JSON.stringify([]));
     navigate("/paymentConfirmation");
   };
   const [displayAddress, setDisplayAddress] = useState("");
@@ -64,8 +63,8 @@ const Payment = () => {
               {" "}
               ₦
               {(
-                parseFloat(cart?.productPrice.replace(/[^0-9.-]+/g, "")) *
-                cart?.quantity
+                parseFloat(cart?.current_price[0]["NGN"][0]) *
+                cart?.available_quantity
               ).toLocaleString()}
             </p>
           </div>
@@ -97,8 +96,7 @@ const Payment = () => {
                 {" "}
                 ₦
                 {(
-                  parseFloat(cart?.productPrice.replace(/[^0-9.-]+/g, "")) *
-                  cart?.quantity
+                  parseFloat(cart?.productPrice) * cart?.available_quantity
                 ).toLocaleString()}
               </p>
             </div>

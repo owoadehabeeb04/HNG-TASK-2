@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Navbar from "../components/navbar";
 import { stateContextType } from "../dataTypes.tsx";
 import { useStateContext } from "../context/stateContext.tsx";
@@ -7,14 +6,14 @@ import MyCart from "../components/mycart.tsx";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer.tsx";
 const Cart = () => {
-  const { setCartProducts, cartProducts }: stateContextType = useStateContext();
+  const {  cartProducts }: stateContextType = useStateContext();
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartProducts");
-    if (setCartProducts !== undefined && storedCartItems) {
-      setCartProducts(JSON.parse(storedCartItems));
-    }
-  }, []);
+  // useEffect(() => {
+  //   // const storedCartItems = localStorage.getItem("cartProducts");
+  //   if (setCartProducts !== undefined && storedCartItems) {
+  //     setCartProducts(JSON.parse(storedCartItems));
+  //   }
+  // }, []);
   return (
     <div>
       <div>

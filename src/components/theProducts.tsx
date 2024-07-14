@@ -11,7 +11,6 @@ import filter from "../../src/assets/icons/FILTER.svg";
 import axios from "axios";
 const TheProducts = () => {
   const {
-    cartProducts,
     setCartProducts,
     setGottenProducts,
     gottenProducts,
@@ -19,26 +18,26 @@ const TheProducts = () => {
   // useEffect(() => {
   //   if (setGottenProducts !== undefined) setGottenProducts(products);
   // }, [gottenProducts, setGottenProducts]);
-  useEffect(() => {
-    const storedCartProducts = localStorage.getItem("cartProducts");
-    if (setCartProducts && storedCartProducts) {
-      setCartProducts(JSON.parse(storedCartProducts));
-    }
-  }, [setCartProducts]);
+  // useEffect(() => {
+  //   const storedCartProducts = localStorage.getItem("cartProducts");
+  //   if (setCartProducts && storedCartProducts) {
+  //     setCartProducts(JSON.parse(storedCartProducts));
+  //   }
+  // }, [setCartProducts]);
 
-  useEffect(() => {
-    localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
-  }, [cartProducts]);
+  // useEffect(() => {
+  //   localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+  // }, [cartProducts]);
 
   const clickCart = (i: number) => {
     if (setCartProducts !== undefined && gottenProducts) {
-      const productToAdd = { ...gottenProducts[i], quantity: 1 };
-      setCartProducts((prevCartProducts) => {
+      const productToAdd = { ...gottenProducts[i] };
+      setCartProducts((prevCartProducts: any) => {
         const updatedCartProducts = [...prevCartProducts, productToAdd];
-        localStorage.setItem(
-          "cartProducts",
-          JSON.stringify(updatedCartProducts)
-        );
+        // localStorage.setItem(
+        //   "cartProducts",
+        //   JSON.stringify(updatedCartProducts)
+        // );
         return updatedCartProducts;
       });
       alert("added successfully");

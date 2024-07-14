@@ -12,12 +12,12 @@ const MyCart = () => {
     totalPrice,
   }: stateContextType = useStateContext();
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartProducts");
-    if (setCartProducts !== undefined && storedCartItems) {
-      setCartProducts(JSON.parse(storedCartItems));
-    }
-  }, [setCartProducts]);
+  // useEffect(() => {
+  //   const storedCartItems = localStorage.getItem("cartProducts");
+  //   if (setCartProducts !== undefined && storedCartItems) {
+  //     setCartProducts(JSON.parse(storedCartItems));
+  //   }
+  // }, [setCartProducts]);
   const increaseQuantity = (index: number) => {
     if (!cartProducts || !setCartProducts) {
       console.error("Cart products is not available.");
@@ -25,18 +25,18 @@ const MyCart = () => {
     }
     const updatedCartProducts: cartProps[] = [...cartProducts];
     if (index >= 0 && index < updatedCartProducts.length) {
-      const updatedQuantity = updatedCartProducts[index].quantity + 1;
+      const updatedQuantity = updatedCartProducts[index].available_quantity + 1;
 
       const updatedProduct = {
         ...updatedCartProducts[index],
-        quantity: updatedQuantity,
+        available_quantity: updatedQuantity,
       };
 
       updatedCartProducts[index] = updatedProduct;
 
       setCartProducts(updatedCartProducts);
 
-      localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
+      // localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
 
       return updatedCartProducts;
     } else {
@@ -55,20 +55,20 @@ const MyCart = () => {
     if (
       index >= 0 &&
       index < updatedCartProducts.length &&
-      updatedCartProducts[index].quantity > 1
+      updatedCartProducts[index].available_quantity > 1
     ) {
-      const updatedQuantity = updatedCartProducts[index].quantity - 1;
+      const updatedQuantity = updatedCartProducts[index].available_quantity - 1;
 
       const updatedProduct = {
         ...updatedCartProducts[index],
-        quantity: updatedQuantity,
+        available_quantity: updatedQuantity,
       };
 
       updatedCartProducts[index] = updatedProduct;
 
       setCartProducts(updatedCartProducts);
 
-      localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
+      // localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
 
       return updatedCartProducts;
     } else {
@@ -82,24 +82,26 @@ const MyCart = () => {
         const updatedCartProducts = prevCartProducts.filter(
           (_e, i: number) => i !== index
         );
-        localStorage.setItem(
-          "cartProducts",
-          JSON.stringify(updatedCartProducts)
-        );
+        // localStorage.setItem(
+        //   "cartProducts",
+        //   JSON.stringify(updatedCartProducts)
+        // );
         return updatedCartProducts;
       });
     }
   };
+
   const priceTotal =
     cartProducts?.map(
       (cartprice: cartProps) =>
-        parseFloat(cartprice.productPrice.replace(/[^0-9.-]+/g, "")) *
-        cartprice.quantity
+        parseFloat(cartprice.current_price[0]["NGN"][0]) *
+        cartprice.available_quantity
+      // console.log({ cartprice })
     ) ?? [];
-
+  console.log({ priceTotal });
   const theTotal: number =
     priceTotal.length > 0
-      ? priceTotal.reduce((acc: number, price: number) => acc + price, 0)
+      ? priceTotal.reduce((acc: any, price: any) => acc + price, 0)
       : 0;
 
   useEffect(() => {
@@ -115,7 +117,7 @@ const MyCart = () => {
       localStorage.setItem("totalPrice", formattedTotal);
     }
   }, [theTotal, setTotalPrice]);
-
+  console.log({ cartProducts });
   return (
     <>
       {" "}
@@ -132,16 +134,16 @@ const MyCart = () => {
               key={i}
             >
               <div className="fixed-image-size w-[120px">
-                <img
+                {/* <img
                   className="w-full sm:w-[90px] h-[90px]"
                   src={cart?.productImage}
                   alt={cart?.productName}
-                />
+                /> */}
               </div>
 
               <div className="flex sm:flex-row flex-col  w-full justify-between ">
                 <div>
-                  <h1 className="font-medium">{cart?.productName}</h1>
+                  <h1 className="font-medium">{cart?.name}</h1>
                 </div>
                 <div className=" flex gap-4  items-center">
                   <div className="flex gap-4 items-center">
@@ -153,7 +155,7 @@ const MyCart = () => {
                     </span>
 
                     <span className="w-[40px] flex justify-center items-center border border-[##D9D9D9]  h-[40px] px-4 py-2 rounded-[4px] ">
-                      {cart?.quantity}
+                      {cart?.available_quantity}
                     </span>
                     <span
                       className="cursor-pointer"
@@ -166,9 +168,8 @@ const MyCart = () => {
                     <p className="font-Inter text-[20px] font-medium leading-[32px] text-[#000]">
                       ₦
                       {(
-                        parseFloat(
-                          cart?.productPrice.replace(/[^0-9.-]+/g, "")
-                        ) * cart?.quantity
+                        parseFloat(cart?.current_price[0]["NGN"][0]) *
+                        cart?.available_quantity
                       ).toLocaleString()}
                     </p>
                   </div>

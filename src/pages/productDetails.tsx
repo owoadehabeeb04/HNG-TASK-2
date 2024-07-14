@@ -89,13 +89,13 @@ const ProductDetails = () => {
 
   const clickCart = (i: number) => {
     if (setCartProducts !== undefined && gottenProducts) {
-      const productToAdd = { ...gottenProducts[i], quantity: 1 };
-      setCartProducts((prevCartProducts) => {
+      const productToAdd = { ...gottenProducts[i] };
+      setCartProducts((prevCartProducts: any) => {
         const updatedCartProducts = [...prevCartProducts, productToAdd];
-        localStorage.setItem(
-          "cartProducts",
-          JSON.stringify(updatedCartProducts)
-        );
+        // localStorage.setItem(
+        //   "cartProducts",
+        //   JSON.stringify(updatedCartProducts)
+        // );
         return updatedCartProducts;
       });
       alert("added successfully");
@@ -104,7 +104,12 @@ const ProductDetails = () => {
   // const truncateText = (text: string, maxLength: number) => {
   //   return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
   // };
-  console.log("", ProductDetails);
+  console.log("", ProductDetails.photos);
+  const photos = ProductDetails.photos || [];
+
+  // const photos = ProductDetails.photos;/
+  const [index, setIndex] = useState(0);
+
   return (
     <div>
       <Navbar />
@@ -133,30 +138,41 @@ const ProductDetails = () => {
                   {">"}
                 </span>
               </Link>
-              <Link to="/shop/" className="flex items-center gap-6">
-                <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                  {ProductDetails && ProductDetails[0]?.ProductCategory}
-                </p>
-                <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                  {">"}
-                </span>
-              </Link>
               <p className="font-Inter text-base leading-[16px]  font-normal text-[#000]  ">
                 {ProductDetails && ProductDetails?.name}
               </p>
             </div>
           </div>
-          {/* {`https://api.timbu.cloud/images/${ProductDetails?.photos[0]?.url}` && (
-            // <Link to={`/productDescription/${ProductDetails?.id}`}>
-            <div className="flex flex-wrap">
-              <img
-                src={`https://api.timbu.cloud/images/${ProductDetails?.photos[0]?.url}`}
-                alt={ProductDetails?.name}
-                className="w-[160px] h-[160px] object-contain"
-              />
+
+          {/* <div className="grid md:grid-cols-2 gap-12"> */}
+          <div className="w-[600px] max-w-full ">
+            <div className="mt-16">
+              {photos.length > 0 && (
+                <img
+                  src={`https://api.timbu.cloud/images/${photos[index]?.url}`}
+                  className="aspect-square rounded-[1rem] w-full object-fill"
+                  alt="images"
+                />
+              )}
             </div>
-            // </Link>
-          )} */}
+            <div className="flex justify-between w-full  mt-8 flex-row  gap-4 ">
+              {ProductDetails &&
+                photos &&
+                photos.map((pic: any, i: any) => (
+                  <div key={i}>
+                    <div className="flex flex-wrap">
+                      <img
+                        src={`https://api.timbu.cloud/images/${pic?.url}`}
+                        onClick={() => setIndex(i)}
+                        alt={pic?.name}
+                        className="rounded-[1rem] w-[160px] max-w-full  sm:h-[160px] cursor-pointer aspect-square object-cover"
+                      />
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+          {/* </div> */}
         </div>
         <div className="px-[1.8125rem] flex flex-col gap-6 mt-8 sm:mt-16">
           <h1 className="text-[32px] sm:text-[40px] font-Inter fot-semibold sm:font-bold leading-[40px]">
