@@ -52,9 +52,9 @@ const Payment = () => {
           >
             <div className="flex items-center gap-3">
               {`https://api.timbu.cloud/images/${cart?.photos[0]?.url}` && (
-                <div className="fixed-image-size w-[120px">
+                <div className="fixed-image-size w-[120px]">
                   <img
-                    className="w-full sm:w-[90px] h-[90px]"
+                    className="w-full sm:w-[90px] h-[90px] object-cover"
                     src={`https://api.timbu.cloud/images/${cart?.photos[0]?.url}`}
                     alt={cart?.name}
                   />

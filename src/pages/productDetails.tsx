@@ -7,7 +7,7 @@ import Navbar from "../components/navbar.tsx";
 // import { products } from "../components/products.ts";
 import delivery from "../../src/assets/icons/delivery-truck-svgrepo-com (1) 1.svg";
 import shop from "../../src/assets/icons/shop-2-svgrepo-com 2.svg";
-// import Back from "../../src/assets/icons/back.svg";
+import Back from "../../src/assets/icons/back.svg";
 import Footer from "../components/footer.tsx";
 // import favorite from "../../src/assets/icons/Favorites.svg";
 import axios from "axios";
@@ -112,7 +112,7 @@ const ProductDetails = () => {
   return (
     <div>
       <Navbar />
-      <div className="pt-8 bg-[#FAFAFA]">
+      <div className="sm:pt-8 bg-[#FAFAFA]">
         {isLoading ? (
           <div className="flex justify-center h-screen w-full  items-center">
             <Loader />
@@ -120,11 +120,11 @@ const ProductDetails = () => {
         ) : (
           <>
             <div className="w-[1250px] mx-auto  px-[1.5rem] max-w-full">
-              {/* <div className="py-4 border-b mb-4  border-[#B5B5B5]">
-            <Link to="/shop/">
-              <img src={Back} alt="back" />
-            </Link>
-          </div> */}
+              <div className="py-4 sm:hidden  border-b mb-4  border-[#B5B5B5]">
+                <Link to="/shop/">
+                  <img src={Back} alt="back" />
+                </Link>
+              </div>
               <div className="sm:flex hidden">
                 <div className="hidden sm:flex items-center gap-6 px-4">
                   <Link to="/shop/" className="flex items-center gap-6">
@@ -151,7 +151,7 @@ const ProductDetails = () => {
 
               {/* <div className="grid md:grid-cols-2 gap-12"> */}
               <div className="w-[851px] mx-auto max-w-full ">
-                <div className="mt-16">
+                <div className="sm:mt-16">
                   {photos.length > 0 && (
                     <img
                       src={`https://api.timbu.cloud/images/${photos[index]?.url}`}
@@ -163,18 +163,23 @@ const ProductDetails = () => {
                 <div className="flex justify-between w-full  mt-8 flex-row  gap-4 ">
                   {ProductDetails &&
                     photos &&
-                    photos.map((pic: { url: any; name: string | undefined; }, i: number) => (
-                      <div key={i}>
-                        <div className="flex flex-wrap">
-                          <img
-                            src={`https://api.timbu.cloud/images/${pic?.url}`}
-                            onClick={() => setIndex(i)}
-                            alt={pic?.name}
-                            className="rounded-[1rem] w-[160px] max-w-full  sm:h-[160px] cursor-pointer aspect-square object-cover"
-                          />
+                    photos.map(
+                      (
+                        pic: { url: any; name: string | undefined },
+                        i: number
+                      ) => (
+                        <div key={i}>
+                          <div className="flex flex-wrap">
+                            <img
+                              src={`https://api.timbu.cloud/images/${pic?.url}`}
+                              onClick={() => setIndex(i)}
+                              alt={pic?.name}
+                              className="rounded-[1rem] w-[160px] max-w-full  sm:h-[160px] cursor-pointer aspect-square object-cover"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                 </div>
               </div>
               {/* </div> */}
@@ -249,7 +254,7 @@ const ProductDetails = () => {
                       <p className="text-[#000] text-base leading-[24px] font-Inter font-normal">
                         {text?.brand}
                       </p>
-                      <p className="text-[#000] text-base leading-[24px] font-Inter font-normal">
+                      <p className="text-[#000] text-base leading-[24px] text-ellipsis whitespace-nowrap font-Inter font-normal">
                         {text?.text}{" "}
                       </p>
                     </div>
