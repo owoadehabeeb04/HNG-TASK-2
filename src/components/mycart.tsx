@@ -12,12 +12,12 @@ const MyCart = () => {
     totalPrice,
   }: stateContextType = useStateContext();
 
-  // useEffect(() => {
-  //   const storedCartItems = localStorage.getItem("cartProducts");
-  //   if (setCartProducts !== undefined && storedCartItems) {
-  //     setCartProducts(JSON.parse(storedCartItems));
-  //   }
-  // }, [setCartProducts]);
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartProducts");
+    if (setCartProducts !== undefined && storedCartItems) {
+      setCartProducts(JSON.parse(storedCartItems));
+    }
+  }, [setCartProducts]);
   const increaseQuantity = (index: number) => {
     if (!cartProducts || !setCartProducts) {
       console.error("Cart products is not available.");
@@ -36,7 +36,7 @@ const MyCart = () => {
 
       setCartProducts(updatedCartProducts);
 
-      // localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
+      localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
 
       return updatedCartProducts;
     } else {
@@ -68,7 +68,7 @@ const MyCart = () => {
 
       setCartProducts(updatedCartProducts);
 
-      // localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
+      localStorage.setItem("cartProducts", JSON.stringify(updatedCartProducts));
 
       return updatedCartProducts;
     } else {
@@ -82,10 +82,10 @@ const MyCart = () => {
         const updatedCartProducts = prevCartProducts.filter(
           (_e, i: number) => i !== index
         );
-        // localStorage.setItem(
-        //   "cartProducts",
-        //   JSON.stringify(updatedCartProducts)
-        // );
+        localStorage.setItem(
+          "cartProducts",
+          JSON.stringify(updatedCartProducts)
+        );
         return updatedCartProducts;
       });
     }
@@ -133,14 +133,15 @@ const MyCart = () => {
               className="flex w-full max-[340px]:flex-col gap-2 max-[340px]:items-start sm:gap-8 items-center py-4 border-b border-[#A3A3A3]"
               key={i}
             >
-              <div className="fixed-image-size w-[120px">
-                {/* <img
-                  className="w-full sm:w-[90px] h-[90px]"
-                  src={cart?.productImage}
-                  alt={cart?.productName}
-                /> */}
-              </div>
-
+              {`https://api.timbu.cloud/images/${cart?.photos[0]?.url}` && (
+                <div className="fixed-image-size w-[120px">
+                  <img
+                    className="w-full sm:w-[90px] h-[90px]"
+                    src={`https://api.timbu.cloud/images/${cart?.photos[0]?.url}`}
+                    alt={cart?.name}
+                  />
+                </div>
+              )}
               <div className="flex sm:flex-row flex-col  w-full justify-between ">
                 <div>
                   <h1 className="font-medium">{cart?.name}</h1>

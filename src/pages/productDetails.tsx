@@ -92,10 +92,10 @@ const ProductDetails = () => {
       const productToAdd = { ...gottenProducts[i] };
       setCartProducts((prevCartProducts: any) => {
         const updatedCartProducts = [...prevCartProducts, productToAdd];
-        // localStorage.setItem(
-        //   "cartProducts",
-        //   JSON.stringify(updatedCartProducts)
-        // );
+        localStorage.setItem(
+          "cartProducts",
+          JSON.stringify(updatedCartProducts)
+        );
         return updatedCartProducts;
       });
       alert("added successfully");

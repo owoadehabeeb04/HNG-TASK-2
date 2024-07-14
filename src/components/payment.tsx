@@ -10,17 +10,18 @@ const Payment = () => {
     clickAddress,
     address,
     totalPrice,
+    setTotalPrice,
     setAddressOrPayment,
     setCartProducts,
   }: stateContextType = useStateContext();
   const deliveryFee: number = 5000;
 
-  // useEffect(() => {
-  //   const totalPriceFromStorage = localStorage.getItem("totalPrice");
-  //   if (totalPriceFromStorage) {
-  //     setTotalPrice(parseFloat(totalPriceFromStorage));
-  //   }
-  // }, []);
+  useEffect(() => {
+    const totalPriceFromStorage = localStorage.getItem("totalPrice");
+    if (totalPriceFromStorage) {
+      setTotalPrice(parseFloat(totalPriceFromStorage));
+    }
+  }, []);
   const navigate = useNavigate();
   const [cardOrBank, setCardOrBank] = useState(0);
   const typesOfPayment = ["Card Payment", "Bank Transfer"];
@@ -28,7 +29,7 @@ const Payment = () => {
     if (setCartProducts) {
       setCartProducts([]);
     }
-    // localStorage.setItem("cartProducts", JSON.stringify([]));
+    localStorage.setItem("cartProducts", JSON.stringify([]));
     navigate("/paymentConfirmation");
   };
   const [displayAddress, setDisplayAddress] = useState("");
@@ -38,7 +39,7 @@ const Payment = () => {
       setDisplayAddress(address[clickAddress]?.subName || "");
     }
   }, [address, clickAddress]);
-
+  console.log("price", cartProducts && cartProducts[0]?.current_price);
   return (
     <div className=" w-[1250px] max-w-full xl:px-0 px-4 sm:px-12 py-12 xl:mx-auto  mx-auto  gap-9 sm:gap-12 lg:gap-24  grid lg:grid-cols-2 ">
       <div className="sm:hidden flex flex-col">
@@ -48,14 +49,18 @@ const Payment = () => {
             className="border-b border-[#A3A3A3] rounded-[0px] my-4 flex justify-between items-center px-4 py-4"
           >
             <div className="flex items-center gap-3">
-              <img
-                className="w-[90px] h-[90px]"
-                src={cart?.productImage}
-                alt=""
-              />
+              {`https://api.timbu.cloud/images/${cart?.photos[0]?.url}` && (
+                <div className="fixed-image-size w-[120px">
+                  <img
+                    className="w-full sm:w-[90px] h-[90px]"
+                    src={`https://api.timbu.cloud/images/${cart?.photos[0]?.url}`}
+                    alt={cart?.name}
+                  />
+                </div>
+              )}
 
               <h1 className="font-medium text-base font-Inter leading-[24px] ">
-                {cart?.productName}
+                {cart?.name}
               </h1>
             </div>
 
@@ -81,14 +86,16 @@ const Payment = () => {
               className="bg-[#F6F6F6] rounded-[13px] my-4 flex justify-between items-center px-4 py-4"
             >
               <div className="flex items-center gap-6">
-                <img
-                  className="w-[40px] h-[40px]"
-                  src={cart?.productImage}
-                  alt=""
-                />
+                {`https://api.timbu.cloud/images/${cart?.photos[0]?.url}` && (
+                  <img
+                    className="w-full sm:w-[90px] h-[90px]"
+                    src={`https://api.timbu.cloud/images/${cart?.photos[0]?.url}`}
+                    alt={cart?.name}
+                  />
+                )}
 
                 <h1 className="font-medium  lg:text-base font-Inter leading-[24px] ">
-                  {cart?.productName}
+                  {cart?.name}
                 </h1>
               </div>
 
@@ -96,7 +103,8 @@ const Payment = () => {
                 {" "}
                 ₦
                 {(
-                  parseFloat(cart?.productPrice) * cart?.available_quantity
+                  parseFloat(cart?.current_price[0]["NGN"][0]) *
+                  cart?.available_quantity
                 ).toLocaleString()}
               </p>
             </div>

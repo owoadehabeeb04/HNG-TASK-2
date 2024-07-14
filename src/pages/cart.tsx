@@ -5,15 +5,16 @@ import empty from "../../src/assets/icons/Frame 427319386.svg";
 import MyCart from "../components/mycart.tsx";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer.tsx";
+import { useEffect } from "react";
 const Cart = () => {
-  const {  cartProducts }: stateContextType = useStateContext();
+  const { cartProducts, setCartProducts }: stateContextType = useStateContext();
 
-  // useEffect(() => {
-  //   // const storedCartItems = localStorage.getItem("cartProducts");
-  //   if (setCartProducts !== undefined && storedCartItems) {
-  //     setCartProducts(JSON.parse(storedCartItems));
-  //   }
-  // }, []);
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartProducts");
+    if (setCartProducts !== undefined && storedCartItems) {
+      setCartProducts(JSON.parse(storedCartItems));
+    }
+  }, []);
   return (
     <div>
       <div>
@@ -31,7 +32,7 @@ const Cart = () => {
             <p className="text-[20px] max-[640px]:mt-2  py-1 leading-normal text-center min-[110px]:leading-6 font-normal font-OpenSans">
               PLEASE CLICK ON THE BUTTON TO START SHOPPING
             </p>
-            <Link to="/Shop" className="flex justify-center items-center ">
+            <Link to="/shop" className="flex justify-center items-center ">
               <button className=" rounded-[6px]  sm:w-fit w-full bg-black text-white flex justify-center items-center py-4 px-[70px] font-OpenSans font-medium leading-normal max-[1024px]:py-4 max-[1024px]:px-4  max-[480px]:mt-[0rem]">
                 <span> Shop Now </span>
               </button>

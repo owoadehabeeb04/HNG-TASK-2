@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Search from "../../src/assets/icons/Vector.svg";
 import favorites from "../../src/assets/icons/Favorites.svg";
 import cart from "../../src/assets/icons/Cart1.svg";
@@ -10,19 +10,19 @@ import hamburger from "../../src/assets/icons/Burger.svg";
 import close from "../../src/assets/icons/Close.svg";
 const Navbar = () => {
   const routes: RouteConfig[] = [
-    { path: "/", text: "Home" },
+    { path: "/shop", text: "Home" },
     { path: "#", text: "About" },
     { path: "#", text: "Contact" },
   ];
 
   const [clicked, setClicked] = useState<number>();
-  const { cartProducts }: stateContextType = useStateContext();
-  // useEffect(() => {
-  //   const storedCartItems = localStorage.getItem("cartProducts");
-  //   if (setCartProducts !== undefined && storedCartItems) {
-  //     setCartProducts(JSON.parse(storedCartItems));
-  //   }
-  // }, []);
+  const { cartProducts, setCartProducts }: stateContextType = useStateContext();
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem("cartProducts");
+    if (setCartProducts !== undefined && storedCartItems) {
+      setCartProducts(JSON.parse(storedCartItems));
+    }
+  }, []);
   const [toggle, setToggle] = useState(false);
   const click = () => {
     setToggle(!toggle);
