@@ -10,7 +10,7 @@ import hamburger from "../../src/assets/icons/Burger.svg";
 import close from "../../src/assets/icons/Close.svg";
 const Navbar = () => {
   const routes: RouteConfig[] = [
-    { path: "/shop", text: "Home" },
+    { path: "/shop/", text: "Home" },
     { path: "#", text: "About" },
     { path: "#", text: "Contact" },
   ];
@@ -68,15 +68,17 @@ const Navbar = () => {
         <div className=" lg:flex hidden flex-row items-center gap-[27px] sm:gap-[2rem] xl:gap-[3.25rem]">
           {routes.map((nav: RouteConfig, i: number) => (
             <div key={i}>
-              <a
-                href={nav?.path}
-                onClick={() => setClicked(i)}
-                className={`${
-                  clicked === i ? "text-[#000] " : "text-[#A4A4A4]"
-                } hover:text-[#000] transition-all font-normal font-Inter text-base leading-[19.35px]`}
-              >
-                {nav?.text}
-              </a>
+              <Link to={nav.path}>
+                {" "}
+                <p
+                  onClick={() => setClicked(i)}
+                  className={`${
+                    clicked === i ? "text-[#000] " : "text-[#A4A4A4]"
+                  } hover:text-[#000] transition-all font-normal font-Inter cursor-pointer text-base leading-[19.35px]`}
+                >
+                  {nav?.text}
+                </p>
+              </Link>
             </div>
           ))}
         </div>

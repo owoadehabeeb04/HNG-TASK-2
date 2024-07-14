@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type productsProps = {
   productName: string;
   name: string;
   productImage: string;
   productPrice: string | number;
-  current_price: any;
+  current_price: { NGN: (string | number)[] }[];
   slashedProductPrice: string | number;
   ProductCategory: string;
   productDetails1: string;
@@ -12,16 +11,15 @@ export type productsProps = {
   productDetails3: string;
   id: string;
   unique_id: string;
-  photos: any;
+  photos: { url: string }[];
 };
 export type cartProps = {
   productName: string;
   name: string;
-
   productImage: string;
-  productPrice: any;
-  current_price: any;
-  slashedProductPrice: any;
+  productPrice: string | number;
+  current_price: { NGN: (string | number)[] }[];
+  slashedProductPrice: string | number;
   ProductCategory: string;
   productDetails1: string;
   productDetails2: string;
@@ -29,9 +27,8 @@ export type cartProps = {
   id: string;
   quantity: number;
   available_quantity: number;
-  // id: string;
   unique_id: string;
-  photos: any;
+  photos: { url: string }[];
 };
 
 export type RouteConfig = {
@@ -52,11 +49,12 @@ export type stateContextType = {
   cartProps?: cartProps[];
   productProps?: productsProps[];
   totalPrice?: string;
-  setTotalPrice?: React.Dispatch<React.SetStateAction<string>> | any;
-  setAddressOrPayment?: React.Dispatch<React.SetStateAction<number>> | any;
+  setTotalPrice?: React.Dispatch<React.SetStateAction<string>>;
+  setAddressOrPayment?: React.Dispatch<React.SetStateAction<number>>;
   addressOrPayment?: number;
-  setClickAddress?: React.Dispatch<React.SetStateAction<any>> | any;
-  clickAddress?: any;
-  address?: any[];
+  setClickAddress?: React.Dispatch<React.SetStateAction<number>>;
+  clickAddress?: number;
+  address?: addressProps[];
   setAddress?: React.Dispatch<React.SetStateAction<addressProps[]>>;
+  
 };

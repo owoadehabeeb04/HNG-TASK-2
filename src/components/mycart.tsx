@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import { cartProps, stateContextType } from "../dataTypes.tsx";
 import { useStateContext } from "../context/stateContext.tsx";
@@ -25,11 +24,11 @@ const MyCart = () => {
     }
     const updatedCartProducts: cartProps[] = [...cartProducts];
     if (index >= 0 && index < updatedCartProducts.length) {
-      const updatedQuantity = updatedCartProducts[index].available_quantity + 1;
+      const updatedQuantity = updatedCartProducts[index].quantity + 1;
 
       const updatedProduct = {
         ...updatedCartProducts[index],
-        available_quantity: updatedQuantity,
+        quantity: updatedQuantity,
       };
 
       updatedCartProducts[index] = updatedProduct;
@@ -55,13 +54,13 @@ const MyCart = () => {
     if (
       index >= 0 &&
       index < updatedCartProducts.length &&
-      updatedCartProducts[index].available_quantity > 1
+      updatedCartProducts[index].quantity > 1
     ) {
-      const updatedQuantity = updatedCartProducts[index].available_quantity - 1;
+      const updatedQuantity = updatedCartProducts[index].quantity - 1;
 
       const updatedProduct = {
         ...updatedCartProducts[index],
-        available_quantity: updatedQuantity,
+        quantity: updatedQuantity,
       };
 
       updatedCartProducts[index] = updatedProduct;
@@ -92,32 +91,28 @@ const MyCart = () => {
   };
 
   const priceTotal =
-    cartProducts?.map(
-      (cartprice: cartProps) =>
-        parseFloat(cartprice.current_price[0]["NGN"][0]) *
-        cartprice.available_quantity
-      // console.log({ cartprice })
-    ) ?? [];
-  console.log({ priceTotal });
-  const theTotal: number =
-    priceTotal.length > 0
-      ? priceTotal.reduce((acc: any, price: any) => acc + price, 0)
-      : 0;
+    cartProducts?.reduce((total: number, cartItem: cartProps) => {
+      const price = parseFloat(cartItem.current_price[0]?.NGN[0] as string);
+      return total + price * cartItem.quantity;
+    }, 0) ?? 0;
 
   useEffect(() => {
-    if (!isNaN(theTotal) && theTotal) {
-      setTotalPrice(theTotal.toFixed(2));
+    if (!isNaN(priceTotal) && priceTotal && setTotalPrice) {
+      setTotalPrice(priceTotal.toFixed(2));
     }
-  }, [theTotal, setTotalPrice]);
+  }, [priceTotal, setTotalPrice]);
   const deliveryFee: number = 5000;
+  const totalPriceNumber: string = totalPrice || "0";
+
+  const totalPriceWithDelivery = deliveryFee + parseFloat(totalPriceNumber);
+  const formattedTotalPrice = totalPriceWithDelivery;
   useEffect(() => {
-    if (!isNaN(theTotal) && theTotal) {
-      const formattedTotal = theTotal.toFixed(2);
+    if (!isNaN(priceTotal) && priceTotal && setTotalPrice) {
+      const formattedTotal = priceTotal.toFixed(2);
       setTotalPrice(formattedTotal);
       localStorage.setItem("totalPrice", formattedTotal);
     }
-  }, [theTotal, setTotalPrice]);
-  console.log({ cartProducts });
+  }, [priceTotal, setTotalPrice]);
   return (
     <>
       {" "}
@@ -156,7 +151,7 @@ const MyCart = () => {
                     </span>
 
                     <span className="w-[40px] flex justify-center items-center border border-[##D9D9D9]  h-[40px] px-4 py-2 rounded-[4px] ">
-                      {cart?.available_quantity}
+                      {cart?.quantity}
                     </span>
                     <span
                       className="cursor-pointer"
@@ -169,8 +164,9 @@ const MyCart = () => {
                     <p className="font-Inter text-[20px] font-medium leading-[32px] text-[#000]">
                       ₦
                       {(
-                        parseFloat(cart?.current_price[0]["NGN"][0]) *
-                        cart?.available_quantity
+                        parseFloat(
+                          cart?.current_price[0]?.NGN[0]?.toString() || "0"
+                        ) * cart?.quantity
                       ).toLocaleString()}
                     </p>
                   </div>
@@ -197,7 +193,7 @@ const MyCart = () => {
             <p>Sub Total</p>
             <p>
               ₦ {""}
-              {totalPrice && parseFloat(totalPrice).toLocaleString()}
+              {totalPrice && totalPrice.toLocaleString()}
             </p>
           </div>
           <div className="flex font-medium justify-between items-center">
@@ -211,8 +207,7 @@ const MyCart = () => {
             <p> Total</p>
             <p>
               ₦ {""}
-              {totalPrice &&
-                (parseFloat(totalPrice) + deliveryFee).toLocaleString()}
+              {totalPrice && formattedTotalPrice}
             </p>
           </div>
         </div>

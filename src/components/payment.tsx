@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { stateContextType } from "../dataTypes.tsx";
+import { addressProps, stateContextType } from "../dataTypes.tsx";
 import { useStateContext } from "../context/stateContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,11 +14,14 @@ const Payment = () => {
     setCartProducts,
   }: stateContextType = useStateContext();
   const deliveryFee: number = 5000;
+  const totalPriceNumber: string = totalPrice || "0";
 
+  const totalPriceWithDelivery = deliveryFee + parseFloat(totalPriceNumber);
+  const formattedTotalPrice = totalPriceWithDelivery;
   useEffect(() => {
     const totalPriceFromStorage = localStorage.getItem("totalPrice");
-    if (totalPriceFromStorage) {
-      setTotalPrice(parseFloat(totalPriceFromStorage));
+    if (totalPriceFromStorage && setTotalPrice) {
+      setTotalPrice(totalPriceFromStorage);
     }
   }, []);
   const navigate = useNavigate();
@@ -32,14 +34,14 @@ const Payment = () => {
     localStorage.setItem("cartProducts", JSON.stringify([]));
     navigate("/paymentConfirmation");
   };
-  const [displayAddress, setDisplayAddress] = useState("");
+  const [displayAddress, setDisplayAddress] = useState<string>("");
 
   useEffect(() => {
-    if (address && clickAddress !== undefined) {
-      setDisplayAddress(address[clickAddress]?.subName || "");
+    if (typeof clickAddress === "number" && address && address[clickAddress]) {
+      setDisplayAddress((address[clickAddress] as addressProps)?.subName || "");
     }
   }, [address, clickAddress]);
-  console.log("price", cartProducts && cartProducts[0]?.current_price);
+
   return (
     <div className=" w-[1250px] max-w-full xl:px-0 px-4 sm:px-12 py-12 xl:mx-auto  mx-auto  gap-9 sm:gap-12 lg:gap-24  grid lg:grid-cols-2 ">
       <div className="sm:hidden flex flex-col">
@@ -68,8 +70,8 @@ const Payment = () => {
               {" "}
               ₦
               {(
-                parseFloat(cart?.current_price[0]["NGN"][0]) *
-                cart?.available_quantity
+                parseFloat(cart?.current_price[0]?.NGN[0]?.toString() || "0") *
+                cart?.quantity
               ).toLocaleString()}
             </p>
           </div>
@@ -103,8 +105,9 @@ const Payment = () => {
                 {" "}
                 ₦
                 {(
-                  parseFloat(cart?.current_price[0]["NGN"][0]) *
-                  cart?.available_quantity
+                  parseFloat(
+                    cart?.current_price[0]?.NGN[0]?.toString() || "0"
+                  ) * cart?.quantity
                 ).toLocaleString()}
               </p>
             </div>
@@ -129,7 +132,7 @@ const Payment = () => {
               <p>Sub Total</p>
               <p>
                 ₦ {""}
-                {totalPrice && parseFloat(totalPrice).toLocaleString()}
+                {totalPrice && totalPrice.toLocaleString()}
               </p>
             </div>
             <div className="flex font-medium justify-between items-center">
@@ -143,8 +146,7 @@ const Payment = () => {
               <p> Total</p>
               <p>
                 ₦ {""}
-                {totalPrice &&
-                  (parseFloat(totalPrice) + deliveryFee).toLocaleString()}
+                {formattedTotalPrice}{" "}
               </p>
             </div>
           </div>
@@ -177,7 +179,7 @@ const Payment = () => {
         <div className="flex mt-5 gap-6 items-center  w-full  ">
           {/* <Link to="/cart/"> */}
           <button
-            onClick={() => setAddressOrPayment(0)}
+            onClick={() => setAddressOrPayment && setAddressOrPayment(0)}
             className="border py-4  rounded-[6px] border-[#000] bg-[#fff] w-full text-[#000] text-base font-medium flex justify-center items-center "
           >
             Back

@@ -19,7 +19,7 @@ const Address = () => {
 
       <div className="mt-8">
         {address &&
-          address.map((addres, i) => (
+          address.map((addres, i: number) => (
             <>
               {" "}
               <div
@@ -33,7 +33,7 @@ const Address = () => {
                         ? "border-[#000] p-[0.2rem]"
                         : "border-[#B2B2B2] p-[0.5rem] "
                     } border-2 cursor-pointer rounded-full transition-all w-fit`}
-                    onClick={() => setClickAddress(i)}
+                    onClick={() => setClickAddress && setClickAddress(i)}
                   >
                     {i === clickAddress && (
                       <div className="p-[0.3rem] border-[#000] bg-[#000] border rounded-full  transition-all"></div>
@@ -79,7 +79,7 @@ const Address = () => {
         </Link>
         <button
           className="border py-4 sm:px-14 rounded-[6px] border-[#000] bg-[#000] w-full sm:w-fit text-[#fff] text-base font-normal flex justify-center items-center "
-          onClick={() => setAddressOrPayment(1)}
+          onClick={() =>  setAddressOrPayment && setAddressOrPayment(1)}
         >
           Next
         </button>

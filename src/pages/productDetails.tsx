@@ -11,6 +11,7 @@ import shop from "../../src/assets/icons/shop-2-svgrepo-com 2.svg";
 import Footer from "../components/footer.tsx";
 // import favorite from "../../src/assets/icons/Favorites.svg";
 import axios from "axios";
+import Loader from "../loader/index.tsx";
 interface specification {
   brand: string;
   text: string;
@@ -57,10 +58,11 @@ const ProductDetails = () => {
       text: "56*120",
     },
   ];
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchProducts = async () => {
-      console.log("working");
       try {
+        setIsLoading(true);
         const response = await axios.get(`/api/products/${id}`, {
           params: {
             organization_id: "8d8859bc53b749139eaf62129b17e56f",
@@ -68,14 +70,13 @@ const ProductDetails = () => {
             Apikey: "cb27820f38cd4caa9fe75d9609b3c61720240712155207614682",
           },
         });
-        console.log({ response });
+        setIsLoading(false);
+
         setProductDetails(response?.data);
-        console.log("working");
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
-    console.log("working");
 
     fetchProducts();
   }, [id]);
@@ -89,7 +90,7 @@ const ProductDetails = () => {
 
   const clickCart = (i: number) => {
     if (setCartProducts !== undefined && gottenProducts) {
-      const productToAdd = { ...gottenProducts[i] };
+      const productToAdd = { ...gottenProducts[i], quantity: 1 };
       setCartProducts((prevCartProducts: any) => {
         const updatedCartProducts = [...prevCartProducts, productToAdd];
         localStorage.setItem(
@@ -104,159 +105,167 @@ const ProductDetails = () => {
   // const truncateText = (text: string, maxLength: number) => {
   //   return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
   // };
-  console.log("", ProductDetails.photos);
   const photos = ProductDetails.photos || [];
 
-  // const photos = ProductDetails.photos;/
   const [index, setIndex] = useState(0);
 
   return (
     <div>
       <Navbar />
       <div className="pt-8 bg-[#FAFAFA]">
-        <div className="w-[1250px] mx-auto  px-[1.5rem] max-w-full">
-          {/* <div className="py-4 border-b mb-4  border-[#B5B5B5]">
+        {isLoading ? (
+          <div className="flex justify-center h-screen w-full  items-center">
+            <Loader />
+          </div>
+        ) : (
+          <>
+            <div className="w-[1250px] mx-auto  px-[1.5rem] max-w-full">
+              {/* <div className="py-4 border-b mb-4  border-[#B5B5B5]">
             <Link to="/shop/">
               <img src={Back} alt="back" />
             </Link>
           </div> */}
-          <div className="sm:flex hidden">
-            <div className="hidden sm:flex items-center gap-6 px-4">
-              <Link to="/shop/" className="flex items-center gap-6">
-                <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                  Home
-                </p>
-                <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                  {">"}
-                </span>
-              </Link>
-              <Link to="/shop/" className="flex items-center gap-6">
-                <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                  Categories
-                </p>
-                <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
-                  {">"}
-                </span>
-              </Link>
-              <p className="font-Inter text-base leading-[16px]  font-normal text-[#000]  ">
-                {ProductDetails && ProductDetails?.name}
-              </p>
-            </div>
-          </div>
-
-          {/* <div className="grid md:grid-cols-2 gap-12"> */}
-          <div className="w-[600px] max-w-full ">
-            <div className="mt-16">
-              {photos.length > 0 && (
-                <img
-                  src={`https://api.timbu.cloud/images/${photos[index]?.url}`}
-                  className="aspect-square rounded-[1rem] w-full object-fill"
-                  alt="images"
-                />
-              )}
-            </div>
-            <div className="flex justify-between w-full  mt-8 flex-row  gap-4 ">
-              {ProductDetails &&
-                photos &&
-                photos.map((pic: any, i: any) => (
-                  <div key={i}>
-                    <div className="flex flex-wrap">
-                      <img
-                        src={`https://api.timbu.cloud/images/${pic?.url}`}
-                        onClick={() => setIndex(i)}
-                        alt={pic?.name}
-                        className="rounded-[1rem] w-[160px] max-w-full  sm:h-[160px] cursor-pointer aspect-square object-cover"
-                      />
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-          {/* </div> */}
-        </div>
-        <div className="px-[1.8125rem] flex flex-col gap-6 mt-8 sm:mt-16">
-          <h1 className="text-[32px] sm:text-[40px] font-Inter fot-semibold sm:font-bold leading-[40px]">
-            {ProductDetails && ProductDetails?.name}
-          </h1>
-
-          <p className="text-[#000] font-medium font-Inter text-[24px] sm:text-[32px]  flex flex-col sm:flex-row  leading-[48px]">
-            ₦ {ProductDetails && ProductDetails?.current_price}{" "}
-            {/* <span className="text-[24px] text-[#A0A0A0]  font-Inter font-normal line-through ">
-              {ProductDetails && ProductDetails[0]?.slashedProductPrice}{" "}
-            </span> */}
-          </p>
-          <div className="flex sm:flex-row flex-col gap-6 items-center">
-            <button className="border py-4 px-14 rounded-[6px] border-[#000] bg-[#fff] w-full sm:w-fit text-[#000] text-base font-normal flex justify-center items-center ">
-              Add to wishlist
-            </button>
-            <button
-              className="border py-4 px-14  w-full sm:w-fit rounded-[6px] border-[#000] bg-[#000]  text-[#fff] text-base font-normal flex justify-center items-center "
-              onClick={() => clickCart(0)}
-            >
-              Add to cart{" "}
-            </button>
-          </div>
-          <div className="sm:w-[50%] grid grid-cols-2 mt-8">
-            <div className="flex sm:flex-row flex-col gap-2 items-center">
-              <div className="bg-[#F6F6F6] h-[56px] w-[56px] p-4 rounded-[11px] ">
-                <img src={delivery} alt="delivery" />
-              </div>
-
-              <p className="text-[#717171] font-normal text-[14px] font-Inter leading-[24px]  ">
-                Delivery <br /> <span className="text-[#000] ">1-2 day</span>
-              </p>
-            </div>
-            <div className="flex sm:flex-row flex-col sm:justify-start justify-center gap-2 items-center">
-              <div className="bg-[#F6F6F6] h-[56px] w-[56px] p-4 rounded-[11px] ">
-                <img src={shop} alt="delivery" />
-              </div>
-
-              <p className="text-[#717171] sm:justify-start justify-center font-normal text-[14px] font-Inter leading-[24px]  ">
-                In Stock <br />{" "}
-                <span className="text-[#000] sm:text-left text-center ">
-                  Yes
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="w-[1250px] mx-auto  mt-[80px] px-[1.5rem] max-w-full">
-          <div>
-            <div className="bg-[#fff] py-12 px-[24px] sm:px-[40px]">
-              {" "}
-              <h1 className="text-[rgb(0,0,0)] font-Inter text-[24px] leading-[32px] ">
-                Description
-              </h1>{" "}
-              <p className="text-[#9D9D9D] text-[14px] my-8">
-                {" "}
-                {ProductDetails && ProductDetails?.description} <br /> <br />
-              </p>
-              <h1 className="text-[20px] leading-[24px] font-normal font-Inter">
-                Specification
-              </h1>
-              {specification.map((text, i) => (
-                <div
-                  key={i}
-                  className="flex py-4 border-b border-[#CDCDCD] sm:gap-0 gap-4 justify-between items-center "
-                >
-                  <p className="text-[#000] text-base leading-[24px] font-Inter font-normal">
-                    {text?.brand}
-                  </p>
-                  <p className="text-[#000] text-base leading-[24px] font-Inter font-normal">
-                    {text?.text}{" "}
+              <div className="sm:flex hidden">
+                <div className="hidden sm:flex items-center gap-6 px-4">
+                  <Link to="/shop/" className="flex items-center gap-6">
+                    <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                      Home
+                    </p>
+                    <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                      {">"}
+                    </span>
+                  </Link>
+                  <Link to="/shop/" className="flex items-center gap-6">
+                    <p className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                      Categories
+                    </p>
+                    <span className="font-Inter text-base leading-[16px]  font-normal text-[#A4A4A4]  ">
+                      {">"}
+                    </span>
+                  </Link>
+                  <p className="font-Inter text-base leading-[16px]  font-normal text-[#000]  ">
+                    {ProductDetails && ProductDetails?.name}
                   </p>
                 </div>
-              ))}{" "}
+              </div>
+
+              {/* <div className="grid md:grid-cols-2 gap-12"> */}
+              <div className="w-[851px] mx-auto max-w-full ">
+                <div className="mt-16">
+                  {photos.length > 0 && (
+                    <img
+                      src={`https://api.timbu.cloud/images/${photos[index]?.url}`}
+                      className="aspect-square rounded-[1rem] w-full object-fill"
+                      alt="images"
+                    />
+                  )}
+                </div>
+                <div className="flex justify-between w-full  mt-8 flex-row  gap-4 ">
+                  {ProductDetails &&
+                    photos &&
+                    photos.map((pic: { url: any; name: string | undefined; }, i: number) => (
+                      <div key={i}>
+                        <div className="flex flex-wrap">
+                          <img
+                            src={`https://api.timbu.cloud/images/${pic?.url}`}
+                            onClick={() => setIndex(i)}
+                            alt={pic?.name}
+                            className="rounded-[1rem] w-[160px] max-w-full  sm:h-[160px] cursor-pointer aspect-square object-cover"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              {/* </div> */}
             </div>
-          </div>
-        </div>
-        <div className=" bg-white my-6 sm:my-12  ">
+            <div className="px-[1.8125rem] flex flex-col gap-6 mt-8 sm:mt-16">
+              <h1 className="text-[32px] sm:text-[40px] font-Inter fot-semibold sm:font-bold leading-[40px]">
+                {ProductDetails && ProductDetails?.name}
+              </h1>
+
+              <p className="text-[#000] font-medium font-Inter text-[24px] sm:text-[32px]  flex flex-col sm:flex-row  leading-[48px]">
+                ₦ {ProductDetails && ProductDetails?.current_price}{" "}
+                {/* <span className="text-[24px] text-[#A0A0A0]  font-Inter font-normal line-through ">
+              {ProductDetails && ProductDetails[0]?.slashedProductPrice}{" "}
+            </span> */}
+              </p>
+              <div className="flex sm:flex-row flex-col gap-6 items-center">
+                <button className="border py-4 px-14 rounded-[6px] border-[#000] bg-[#fff] w-full sm:w-fit text-[#000] text-base font-normal flex justify-center items-center ">
+                  Add to wishlist
+                </button>
+                <button
+                  className="border py-4 px-14  w-full sm:w-fit rounded-[6px] border-[#000] bg-[#000]  text-[#fff] text-base font-normal flex justify-center items-center "
+                  onClick={() => clickCart(0)}
+                >
+                  Add to cart{" "}
+                </button>
+              </div>
+              <div className="sm:w-[50%] grid grid-cols-2 mt-8">
+                <div className="flex sm:flex-row flex-col gap-2 items-center">
+                  <div className="bg-[#F6F6F6] h-[56px] w-[56px] p-4 rounded-[11px] ">
+                    <img src={delivery} alt="delivery" />
+                  </div>
+
+                  <p className="text-[#717171] font-normal text-[14px] font-Inter leading-[24px]  ">
+                    Delivery <br />{" "}
+                    <span className="text-[#000] ">1-2 day</span>
+                  </p>
+                </div>
+                <div className="flex sm:flex-row flex-col sm:justify-start justify-center gap-2 items-center">
+                  <div className="bg-[#F6F6F6] h-[56px] w-[56px] p-4 rounded-[11px] ">
+                    <img src={shop} alt="delivery" />
+                  </div>
+
+                  <p className="text-[#717171] sm:justify-start justify-center font-normal text-[14px] font-Inter leading-[24px]  ">
+                    In Stock <br />{" "}
+                    <span className="text-[#000] sm:text-left text-center ">
+                      Yes
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="w-[1250px] mx-auto  mt-[80px] px-[1.5rem] max-w-full">
+              <div>
+                <div className="bg-[#fff] py-12 px-[24px] sm:px-[40px]">
+                  {" "}
+                  <h1 className="text-[rgb(0,0,0)] font-Inter text-[24px] leading-[32px] ">
+                    Description
+                  </h1>{" "}
+                  <p className="text-[#9D9D9D] text-[14px] my-8">
+                    {" "}
+                    {ProductDetails && ProductDetails?.description} <br />{" "}
+                    <br />
+                  </p>
+                  <h1 className="text-[20px] leading-[24px] font-normal font-Inter">
+                    Specification
+                  </h1>
+                  {specification.map((text, i) => (
+                    <div
+                      key={i}
+                      className="flex py-4 border-b border-[#CDCDCD] sm:gap-0 gap-4 justify-between items-center "
+                    >
+                      <p className="text-[#000] text-base leading-[24px] font-Inter font-normal">
+                        {text?.brand}
+                      </p>
+                      <p className="text-[#000] text-base leading-[24px] font-Inter font-normal">
+                        {text?.text}{" "}
+                      </p>
+                    </div>
+                  ))}{" "}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+        {/* <div className=" bg-white my-6 sm:my-12  ">
           <div className="w-[1250px] mx-auto bg-white  px-[1.5rem] max-w-full">
             <h1 className="text-[20px]  pt-[80px] pb-[40px] leading-[24px] font-normal font-Inter">
               Related Products
             </h1>
-            <div className="grid grid-cols-2  gap-4">
-              {/* {relatedProducts?.map((product, i) => (
+            <div className="grid grid-cols-2  gap-4"> */}
+        {/* {relatedProducts?.map((product, i) => (
                 <>
                   {" "}
                   <div
@@ -288,9 +297,9 @@ const ProductDetails = () => {
                   </div>
                 </>
               ))} */}
-            </div>
+        {/* </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Footer />
